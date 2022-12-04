@@ -1,6 +1,42 @@
 import flatpickr from "flatpickr";
+import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import Notiflix from 'notiflix';
+
+const refs = {
+dataInput: document.querySelector('#datetime-picker'),
+startBtn: document.querySelector('[data-start]'),
+timeValue: document.querySelector('.value')
+}
+
+refs.startBtn.addEventListener('click', onClickStart)
+
+function onClickStart() {
+  timer.start() 
+} 
+
+let momentTime = null;
+
+
+  const timer = {
+   intervalId: null,
+   isActive:false,
+   start() {
+    if( this.isActive)return;
+    this.isActive = true;
+
+    this.intervalId = setInterval(() => {
+      const currentTime = Date.now()
+      const deliteTime = momentTime - currentTime;
+      console.log(deliteTime)
+      convertTime = convertMs(deliteTime);
+      changeHtmlValues(convertTime)
+      console.log(this.intervalId)
+    }, 1000)
+   }
+}
+
+
 
 const options = {
     enableTime: true,
@@ -11,6 +47,9 @@ const options = {
       console.log(selectedDates[0]);
     },
   };
+
+const flatpickr = flatpickr('datetime-pickera', options);
+
 
   function convertMs(ms) {
     // Number of milliseconds per unit of time
@@ -31,9 +70,6 @@ const options = {
     return { days, hours, minutes, seconds };
   }
   
-  console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-  console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-  console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
 //Напиши скрипт таймера, который ведёт обратный отсчет до определенной даты.
 // Такой таймер может использоваться в блогах и интернет-магазинах,
 // страницах регистрации событий, во время технического обслуживания и т. д. 
