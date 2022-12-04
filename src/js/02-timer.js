@@ -30,7 +30,7 @@ let momentTime = null;
       const deliteTime = momentTime - currentTime;
       console.log(deliteTime)
       convertTime = convertMs(deliteTime);
-      changeHtmlValues(convertTime)
+      //changeHtmlValues(convertTime)
       console.log(this.intervalId)
     }, 1000)
    }
