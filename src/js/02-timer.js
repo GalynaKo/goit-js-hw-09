@@ -1,5 +1,4 @@
 import flatpickr from "flatpickr";
-import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import Notiflix from 'notiflix';
 
@@ -12,7 +11,9 @@ timeValue: document.querySelector('.value')
 refs.startBtn.addEventListener('click', onClickStart)
 
 function onClickStart() {
-  timer.start() 
+  
+  timer.start() ;
+
 } 
 
 let momentTime = null;
@@ -32,6 +33,7 @@ let momentTime = null;
       convertTime = convertMs(deliteTime);
       //changeHtmlValues(convertTime)
       console.log(this.intervalId)
+      clearInterval(this.intervalId)
     }, 1000)
    }
 }
@@ -41,11 +43,28 @@ let momentTime = null;
 const options = {
     enableTime: true,
     time_24hr: true,
-    defaultDate: new Date(),
+    defaultDate: Date.now(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-      console.log(selectedDates[0]);
+      userDate = selectedDates[0].getTime;
+      refs.startBtn.disabled = false;
+      newData = Date.now()
+
+      if(userDate <= newData) {
+        refs.startBtn.disabled = true;
+        Notiflix.Notify.failure("Please choose a date in the future")
+      }
+      if( userDate > newData) {
+        Notiflix.Notify.success('goodd!')
+      }
     },
+
+
+
+//Тоді по клікові на кнпоку start потрібно взяти вибрану дату і
+// якщо вона в майбутньому, то почати відлік за допомогою setInterval,
+// кожної секунди оновлювати дату
+//А коли час дійте до 0, то зупиниит інтервал
   };
 
 const flatpickr = flatpickr('datetime-pickera', options);
